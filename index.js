@@ -17,7 +17,7 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
-  25,
+  1750,
   window.innerWidth / window.innerHeight,
   0.1,
   2000
@@ -83,11 +83,10 @@ function render() {
   // if (intersects.length > 0) {
   //   scene.remove(intersects[0].object);
   // }
-  points.rotateX(3.14 / 40000);
-  points.rotateY(3.14 / 10000);
-  points.rotateZ(3.14 / 20000);
+  // points.rotateY(3.14 / 10000);c
+  // points.rotateZ(3.14 / 20000);
 
-  camera.position.z += 0.15;
+  camera.position.z -= 0.5;
 
   if (animateStep) {
     if (camera.position.z >= 1250) {
