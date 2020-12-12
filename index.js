@@ -1,4 +1,4 @@
-import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+// import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
 
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -25,13 +25,13 @@ const camera = new THREE.PerspectiveCamera(
 camera.position.z = 500;
 
 // CONTROLS
-const controls = new OrbitControls(camera, renderer.domElement);
+// const controls = new OrbitControls(camera, renderer.domElement);
 // controls.enableDamping = true;
 // controls.dampingFactor = 0.05;
 // controls.screenSpacePanning = false;
-controls.minDistance = 0.1;
-controls.maxDistance = 3000;
-controls.maxPolarAngle = Math.PI / 6;
+// controls.minDistance = 0.1;
+// controls.maxDistance = 3000;
+// controls.maxPolarAngle = Math.PI / 6;
 
 //SCENE
 const scene = new THREE.Scene();
