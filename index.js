@@ -1,4 +1,6 @@
-// import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+
+let ready = false;
 
 window.addEventListener("resize", () => {
   camera.aspect = window.innerWidth / window.innerHeight;
@@ -17,21 +19,21 @@ renderer.setSize(window.innerWidth, window.innerHeight);
 
 //CAMERA
 const camera = new THREE.PerspectiveCamera(
-  1750,
+  35,
   window.innerWidth / window.innerHeight,
   0.1,
   2000
 );
-camera.position.z = 500;
+camera.position.z = 10;
 
 // CONTROLS
-// const controls = new OrbitControls(camera, renderer.domElement);
-// controls.enableDamping = true;
-// controls.dampingFactor = 0.05;
-// controls.screenSpacePanning = false;
-// controls.minDistance = 0.1;
-// controls.maxDistance = 3000;
-// controls.maxPolarAngle = Math.PI / 6;
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.enableDamping = true;
+controls.dampingFactor = 0.05;
+controls.screenSpacePanning = false;
+controls.minDistance = 0.1;
+controls.maxDistance = 3000;
+controls.maxPolarAngle = Math.PI / 2;
 
 //SCENE
 const scene = new THREE.Scene();
@@ -59,6 +61,26 @@ const material = new THREE.PointsMaterial({ color: 0xc7c7c7 });
 const points = new THREE.Points(geometry, material);
 scene.add(points);
 
+const loader = new THREE.TextureLoader();
+const sphere = new THREE.SphereGeometry(1.5, 32, 32);
+let cube;
+loader.load(
+  "./texture1.jpg",
+  function (texture) {
+    const material = new THREE.MeshBasicMaterial({
+      map: texture,
+    });
+    cube = new THREE.Mesh(sphere, material);
+    cube.position.z = 0;
+    scene.add(cube);
+    ready = true;
+  },
+  undefined,
+  function (err) {
+    console.error("An error happened.");
+  }
+);
+
 // RAYCASTER
 const raycaster = new THREE.Raycaster();
 const mouse = new THREE.Vector2();
@@ -78,22 +100,29 @@ document.getElementById("ctaBtn").addEventListener("click", () => {
 //RENDER LOOP
 requestAnimationFrame(render);
 function render() {
+  if (ready) {
+    document.getElementsByClassName("loader")[0].style.display = "none";
+    document.getElementsByClassName("container")[0].style.display = "flex";
+  }
   // raycaster.setFromCamera(mouse, camera);
   // const intersects = raycaster.intersectObjects(scene.children);
   // if (intersects.length > 0) {
   //   scene.remove(intersects[0].object);
   // }
-  // points.rotateY(3.14 / 10000);c
-  // points.rotateZ(3.14 / 20000);
+  points.rotateY(3.14 / 10000);
+  points.rotateZ(3.14 / 20000);
 
-  camera.position.z -= 0.5;
+  // camera.position.z -= 0.05;
 
-  if (animateStep) {
-    if (camera.position.z >= 1250) {
-      animateStep = false;
-    }
-    camera.position.y += 5;
-    camera.position.z += 25;
+  // if (animateStep) {
+  //   if (camera.position.z >= 1250) {
+  //     animateStep = false;
+  //   }
+  //   camera.position.y += 5;
+  //   camera.position.z += 25;
+  // }
+  if (cube) {
+    cube.rotateY(3.14 / 1000);
   }
 
   renderer.render(scene, camera);
