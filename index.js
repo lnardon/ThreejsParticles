@@ -1,4 +1,5 @@
-import { OrbitControls } from "./node_modules/three/examples/jsm/controls/OrbitControls.js";
+import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.118/build/three.module.js";
+import { OrbitControls } from "https://cdn.jsdelivr.net/npm/three@0.118/examples/jsm/controls/OrbitControls.js";
 
 let ready = false;
 
